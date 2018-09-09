@@ -68,9 +68,8 @@ class RegisterController extends Controller
         $customer = $this->create($request->except('_method', '_token'));
 
 
-        Mail::to($customer)->send(new UserRegistered($customer));
-        $request->session()->flash('message', 'На ваш адрес было выслано письмо с подтверждением регистрации.');
-        return back();
+
+    
         Auth::login($customer);
 
         return redirect()->route('accounts');

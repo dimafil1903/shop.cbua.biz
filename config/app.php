@@ -168,6 +168,7 @@ return [
         App\Providers\RepositoryServiceProvider::class,
         Laratrust\LaratrustServiceProvider::class,
         Bhavinjr\Wishlist\Providers\WishlistServiceProvider::class,
+        Laravel\Scout\ScoutServiceProvider::class,
     ],
 
     /*

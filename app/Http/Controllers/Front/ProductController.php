@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Front;
 
 use App\Shop\AttributeValues\AttributeValue;
-
+use Laravel\Scout\Searchable;
 use App\Shop\Categories\Repositories\CategoryRepository;
 use App\Shop\Categories\Repositories\Interfaces\CategoryRepositoryInterface;
 use App\Shop\ProductAttributes\ProductAttribute;
@@ -19,6 +19,17 @@ class ProductController extends Controller
 {
     use ProductTransformable;
 
+    use Searchable;
+
+    /**
+     * Получить имя индекса для модели.
+     *
+     * @return string
+     */
+    public function searchableAs()
+    {
+        return 'posts_index';
+    }
     /**
      * @var ProductRepositoryInterface
      */
@@ -40,7 +51,7 @@ private $categoryRepo;
      */
     public function search()
     {
-
+        
 
 
         if (request()->has('q') && request()->input('q') != '' && request()->has('category') && request()->input('category') != '') {
@@ -52,6 +63,7 @@ private $categoryRepo;
                 ->select('category_product.*', 'categories.name as category','categories.slug as categoryslug', 'products.*')
                 ->orderBy("updated_at")
                 ->paginate(50);
+            
             $search_products= DB::table('category_product')
                 ->join('categories', 'category_product.category_id', '=', 'categories.id')
                 ->join('products', 'category_product.product_id', '=', 'products.id')

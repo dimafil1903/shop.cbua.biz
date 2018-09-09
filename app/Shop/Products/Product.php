@@ -9,11 +9,12 @@ use Gloudemans\Shoppingcart\Contracts\Buyable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 use Sofa\Eloquence\Eloquence;
+use Laravel\Scout\Searchable;
 
 class Product extends Model implements Buyable
 {
     use Eloquence;
-
+    use Searchable;
     protected $searchableColumns = ['name', 'description'];
 
     /**
